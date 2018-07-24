@@ -1,0 +1,26 @@
+%%%%%	General Settings
+COM10	% COM port
+btspp://544A165E2B9F	%device ID (not used)
+flexA01	% device ID (ring01, ring02, flex01, etc.)
+-----	-----------------------
+%%%%%	SWV
+50	% Initial wait time (10ms) (max 0xFFFF)
+10	% Frequency (Hz)
+400	% Initial voltage (mV)
+-900	% Final voltage (mV)
+25	% Amplitude (mV)
+4	% Step (mV)
+1700	% Offset voltage (mV)
+-----	-----------------------
+%%%%%	Chronoamperometry
+60	% measurement points
+1000	% period (ms)
+2750	% offset voltage (mV)
+-200	% potential (mV)
+5	% running average points (set 1 for raw data without averaging)
+-----	-----------------------
+%%%%%	Hardware paremeters
+4300	% Vref (mV)
+12	% ADC resolution (bits)
+18	% Transimpedance gain (kOhm) (ring=18kOhm, flex01=100kOhm, flexA01=470k)
+-----	-----------------------
