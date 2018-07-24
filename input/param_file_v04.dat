@@ -1,7 +1,7 @@
 %%%%%	General Settings
 COM10	% COM port
 btspp://544A165E2B9F	%device ID (not used)
-flexA01	% device ID (ring01, ring02, flex01, etc.)
+ampJ18_02	% device ID (ring01, ring02, flex01, etc.)
 -----	-----------------------
 %%%%%	SWV
 50	% Initial wait time (10ms) (max 0xFFFF)

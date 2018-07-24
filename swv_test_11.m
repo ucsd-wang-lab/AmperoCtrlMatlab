@@ -58,13 +58,13 @@ function swv_test_11
     end
 
 %% parameters
-    %ƒtƒ@ƒCƒ‹‚©‚ç“Ç‚Ý?ž‚Ý
+    %path to param file
     paramfile = '.\input\param_file_v04.dat';
     filereadbutton_Callback();
     
     disp_debug = 1;
 
-%% figure?Ý’è
+%% figure
     % figure parameter
     figwidth = 1280;
     figheight = 720;
@@ -238,7 +238,6 @@ function swv_test_11
     set(f1,'CloseRequestFcn',@closebutton_Callback);
     
 %% main
-    %?I—¹Žž—pƒpƒ‰ƒ?ƒ^
     bool_close = 0;
     bool_stop = 0;
     continuousAmperoFlag = false;
@@ -251,7 +250,6 @@ function swv_test_11
     
     %loop
     while(bool_close == 0)
-        %’âŽ~ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚ç‘Ò‹@
         while(bool_stop == 1)
             pause(0.2);
             if(bool_close == 1); break; end;
@@ -273,7 +271,6 @@ function swv_test_11
 %             end
         end
 
-        %?I—¹?ˆ—?
         if(bool_close == 1)
             TerminateLinkButton_Callback();
             pause(0.1);
@@ -1099,10 +1096,10 @@ function swv_test_11
                     'E9';'A3';'1D';'89';'71';'24'];     %flex01 24:71:89:1D:A3:E9
             case ('flexA01')
                 GAP_EstablishLinkRequest=['01';'09';'FE';'09';'00';'00';'00'; ... 
-                    'D9';'A3';'1D';'89';'71';'24'];     %flex01 24:71:89:1D:A3:D9            otherwise
-            case ('ampoJ18')
+                    'D9';'A3';'1D';'89';'71';'24'];     %flex01 24:71:89:1D:A3:D9
+            case ('ampJ18_02')
                 GAP_EstablishLinkRequest=['01';'09';'FE';'09';'00';'00';'00'; ... 
-                    'E9';'A3';'1D';'89';'71';'24'];     %ampJ18 00:00:8C:94
+                    '7F';'1F';'A6';'2D';'07';'98'];     %ampJ18 98:07:2D:A6:1F:7F
         end
 
         if (disp_debug == 1)
@@ -1125,6 +1122,7 @@ function swv_test_11
              RecvData(7) == hex2dec('09') ) %command
             if ( RecvData(6) == hex2dec('00') )   %status:success
                 disp('Connection OK');
+                htext.String = 'Connection OK';
                 [RecvDataHdrTmp, RecvDataBodyTmp, RecvError] = BleRecvPacket();
                 % [RecvData2, Count2] = fread(BleDongle,22);
                 % RecvDataHex2 = dec2hex(RecvData2);
@@ -1135,6 +1133,8 @@ function swv_test_11
                 % end
             else
                 disp('Connection status: Unsccess');
+                htext.String = 'Error connecting!';
+
             end
             
         else
@@ -1376,7 +1376,6 @@ function swv_test_11
         end       
     end
 
-
 %% Read long char
     function RecvLongChar = BleReadLongCharValue()
 
@@ -1519,7 +1518,7 @@ function swv_test_11
             [RecvDataBody, ~] = fread(BleDongle,ReadDataDataLength);
             RecvDataBodyHex = dec2hex(RecvDataBody,2);
             if (disp_debug == 1)
-                RecvDataBodyHex = RecvDataBodyHex'
+                RecvDataBodyHex = RecvDataBodyHex;
             end
             RecvError = 0;
         end
