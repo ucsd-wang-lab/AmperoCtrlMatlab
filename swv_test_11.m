@@ -604,8 +604,7 @@ function swv_test_11
 %% AMPERO param set
     function AmperoParamSetButton_Callback(source,eventdata)
         htext.String = 'Setting Ampero parameters...';
-        %address
-
+        %addresses
         SWV_PARAM_ADDR_AMPERO_POINTS	= '000C';
         SWV_PARAM_ADDR_AMPERO_PERIOD    = '000D';
         SWV_PARAM_ADDR_AMPERO_OFFSET_VOLTAGE	= '000E';
@@ -1102,9 +1101,9 @@ function swv_test_11
                     '7F';'1F';'A6';'2D';'07';'98'];     %ampJ18 98:07:2D:A6:1F:7F
         end
 
-        if (disp_debug == 1)
-            GAP_EstablishLinkRequest'
-        end
+%         if (disp_debug == 1)
+% %             GAP_EstablishLinkRequest;
+%         end
         
         TxDataDec = hex2dec(GAP_EstablishLinkRequest);
         fwrite(BleDongle, char(TxDataDec)');
@@ -1114,8 +1113,8 @@ function swv_test_11
 
         [RecvData, Count] = fread(BleDongle,9);
         RecvDataHex = dec2hex(RecvData);
-        test = "TESTING"
-        RecvDataHex'
+%         test = "TESTING"
+%         RecvDataHex'
 
         % check the results
         if ( RecvData(8) == hex2dec('FE') && ...   %command
@@ -1321,7 +1320,7 @@ function swv_test_11
         end
 
         WriteData = MakePacket_GATT_WriteCharValue05(WriteAddress,WriteValue);
-        WriteData;
+%         WriteData;
         fwrite(BleDongle, char(WriteData));
         
         % read 2 times. ToDo: check status etc. 
@@ -1356,7 +1355,7 @@ function swv_test_11
         WriteValue = [WriteValue1 WriteValue2];
         
         WriteData = MakePacket_GATT_WriteCharValue08(WriteAddress,WriteValue);
-        WriteData;
+%         WriteData;
         fwrite(BleDongle, char(WriteData));
         
         % read 2 times. ToDo: check status etc. 
@@ -1391,9 +1390,9 @@ function swv_test_11
 
         GATT_ReadLongCharValue=['01';'8C';'FD';'06';'00';'00';'2A';'00';'00';'00'];
 
-        if (disp_debug == 1)
-            GATT_ReadLongCharValue'
-        end
+%         if (disp_debug == 1)
+%             disp(GATT_ReadLongCharValue);
+%         end
         
         TxDataDec = hex2dec(GATT_ReadLongCharValue);
         fwrite(BleDongle, char(TxDataDec)');
@@ -1497,6 +1496,7 @@ function swv_test_11
                            WriteDataHandle2, WriteDataHandle1, ...
                            WriteDataValue2, WriteDataValue1, ...
                            WriteDataValue4, WriteDataValue3]);
+       disp(WriteData);
     end
 
 
