@@ -1,11 +1,11 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Software for wearable bio sensing
 %%% T. Nakagawa
 %%% 2016.?.?
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function swv_test_11
-    clear all;
     close all;
+    clear;
 
     global ComName;
     global BleDongle;
@@ -50,6 +50,8 @@ function swv_test_11
     global ver_r;
     global mid_m;
             
+    disp_debug = 1;
+
 %% logfile output setting
     dialogen = 1;
     dialogfilename = strcat('.\output\dialogfile_', date, '.log');
@@ -62,8 +64,6 @@ function swv_test_11
     paramfile = '.\input\param_file_v04.dat';
     filereadbutton_Callback();
     
-    disp_debug = 1;
-
 %% figure
     % figure parameter
     figwidth = 1280;
@@ -79,15 +79,13 @@ function swv_test_11
     buttonposoffsetx = 50;
     buttonposoffsety = 100;
     % logo parameter
-    logoheight_m = 70;
     logoposmx = 5;
     logoposmy = 5;
 
     %figure
     f1 = figure('Visible','off','Position',[0,0,figwidth,figheight]);
 
-    % Position ‚Í?AŠeAxes ‚É‘Î‚µ?A [?¶‰º(x), ?¶‰º(y) •?, ?‚‚³] ‚ðŽw’è 
-    % ax1‚Æax2‚ð“ü‚ê‘Ö‚¦
+    % Position Axes
     ax1 = axes('Position', [left_m, bot_m+ver_r+mid_m, col_r, ver_r]); 
     ax2 = axes('Position', [left_m, bot_m, col_r, ver_r]); 
 
@@ -132,10 +130,10 @@ function swv_test_11
         'Callback',{@filereadbutton_Callback});
     
     %SWV param setƒ{ƒ^ƒ“
-    hSwvParamSet = uicontrol('Style','pushbutton','String','SWV Param Set','FontName','Arial','FontSize',11, ...
-        'Position',[(figwidth-buttonwidth-buttonposoffsetx),(figheight-buttonheight*6-buttonposoffsety), ...
-                    buttonwidth,buttonheight], ...
-        'Callback',{@SwvParamSetButton_Callback});
+%     hSwvParamSet = uicontrol('Style','pushbutton','String','SWV Param Set','FontName','Arial','FontSize',11, ...
+%         'Position',[(figwidth-buttonwidth-buttonposoffsetx),(figheight-buttonheight*6-buttonposoffsety), ...
+%                     buttonwidth,buttonheight], ...
+%         'Callback',{@SwvParamSetButton_Callback});
     
     %Ampero continuous
     hSwvParamSet = uicontrol('Style','pushbutton','String','Continuous Ampero','FontName','Arial','FontSize',11, ...
@@ -252,7 +250,7 @@ function swv_test_11
     while(bool_close == 0)
         while(bool_stop == 1)
             pause(0.2);
-            if(bool_close == 1); break; end;
+            if(bool_close == 1); break; end
         end
         if (continuousAmperoFlag == true && amperoCompleteFlag == true)
             %pause(30);
@@ -277,7 +275,7 @@ function swv_test_11
             fclose(BleDongle);
             delete(BleDongle);
             clear BleDongle;
-            clear all;
+            clear;
             close all;
             diary off;
             break;
@@ -330,18 +328,22 @@ function swv_test_11
         %[3] Receive GAP_HCI_ExtentionCommandsStatus (9 Bytes)
         % 04 FF 06 7F 06 00 00 FE 00
 
-        [RecvData, Count] = fread(BleDongle,9);
+        [RecvData, ~] = fread(BleDongle,9);
+        if (disp_debug)
         RecvDataHex = dec2hex(RecvData);
-        RecvDataHex'
+        disp(RecvDataHex);
+        end
 
         % [4] : <Rx> - GAP_DeviceInitDone (47 Bytes)
         % 04 FF 2C 00 06 00 7F 77 09 13 F5 D4 1B 00 04 EA
         % 9A 65 8E 5D 2B A2 79 11 38 F6 4C 00 07 43 03 07
         % F5 F3 40 80 07 3B A3 CC 11 EF 96 D5 CE DA DF
 
-        [RecvData, Count] = fread(BleDongle,47);
+        [RecvData, ~] = fread(BleDongle,47);
+        if (disp_debug)
         RecvDataHex = dec2hex(RecvData);
-        RecvDataHex'
+        disp(RecvDataHex);
+        end
 
         % [5] : <Tx> - GAP_GetParam
         % 01 31 FE 01 15
@@ -370,103 +372,112 @@ function swv_test_11
         % [9] : <Rx> - GAP_HCI_ExtentionCommandStatus
         % 04 FF 08 7F 06 00 31 FE 02 50 00
 
-        [RecvData, Count] = fread(BleDongle,11);
+        [RecvData, ~] = fread(BleDongle,11);
+        if (disp_debug)
         RecvDataHex = dec2hex(RecvData);
-        RecvDataHex'
+        disp(RecvDataHex);
+        end
 
         % [10] : <Rx> - GAP_HCI_ExtentionCommandStatus
         % 04 FF 08 7F 06 00 31 FE 02 50 00
 
-        [RecvData, Count] = fread(BleDongle,11);
+        [RecvData, ~] = fread(BleDongle,11);
+        if (disp_debug)
         RecvDataHex = dec2hex(RecvData);
-        RecvDataHex'
+        disp(RecvDataHex);
+        end
 
         % [11] : <Rx> - GAP_HCI_ExtentionCommandStatus
         % 04 FF 08 7F 06 00 31 FE 02 00 00
 
-        [RecvData, Count] = fread(BleDongle,11);
+        [RecvData, ~] = fread(BleDongle,11);
+        if (disp_debug)
         RecvDataHex = dec2hex(RecvData);
-        RecvDataHex'
+        disp(RecvDataHex);
+        end
 
         % [12] : <Rx> - GAP_HCI_ExtentionCommandStatus
         % 04 FF 08 7F 06 00 31 FE 02 D0 07
 
-        [RecvData, Count] = fread(BleDongle,11);
+        [RecvData, ~] = fread(BleDongle,11);
+        if (disp_debug)
         RecvDataHex = dec2hex(RecvData);
-        RecvDataHex'
-
+        disp(RecvDataHex);
+        end
     end
 
-%% scan
-    function ScanButton_Callback(source,eventdata)
-
-        % [1] : <Tx> - 06:03:33.936
-        % -Type           : 0x01 (Command)
-        % -OpCode         : 0xFE04 (GAP_DeviceDiscoveryRequest)
-        % -Data Length    : 0x03 (3) byte(s)
-        %  Mode           : 0x03 (3) (All)
-        %  ActiveScan     : 0x01 (1) (Enable)
-        %  WhiteList      : 0x00 (0) (All)
-        % Dump(Tx):
-        % 0000:01 04 FE 03 03 01 00                            .......                
-
-        GAP_DeviceDiscoveryRequest=['01';'04';'FE';'03';'03';'01';'00'];
-
-        if (disp_debug == 1)
-            GAP_DeviceDiscoveryRequest'
-        end
-        
-        TxDataDec = hex2dec(GAP_DeviceDiscoveryRequest);
-        fwrite(BleDongle, char(TxDataDec)');
-        
-        % read
-        [RecvData, Count] = fread(BleDongle,9);
-        RecvDataHex = dec2hex(RecvData);
-        RecvDataHex'
-
-        % read dummy
-        pause(0.1);
-        [RecvDataHdrTmp, RecvDataBodyTmp, RecvError] = BleRecvPacket();
-        
-    end
-
-%% cancel scan
-    function CancelScanButton_Callback(source,eventdata)
-
-        % [1] : <Tx> - 06:13:56.360
-        % -Type           : 0x01 (Command)
-        % -OpCode         : 0xFE05 (GAP_DeviceDiscoveryCancel)
-        % -Data Length    : 0x00 (0) byte(s)
-        % Dump(Tx):
-        % 0000:01 05 FE 00                                     ....
-
-        GAP_DeviceDiscoveryCancel=['01';'05';'FE';'00'];
-
-        if (disp_debug == 1)
-            GAP_DeviceDiscoveryCancel'
-        end
-        
-        TxDataDec = hex2dec(GAP_DeviceDiscoveryCancel);
-        fwrite(BleDongle, char(TxDataDec)');
-
-        % read dummy
-        pause(0.1);
-        [RecvDataHdrTmp, RecvDataBodyTmp, RecvError] = BleRecvPacket();
-        
-        % clear serial buffer
-        while (BleDongle.BytesAvailable > 0)
-            fread(BleDongle,1);
-        end
-        
-    end
+% %% scan
+%     function ScanButton_Callback(~,~)
+% 
+%         % [1] : <Tx> - 06:03:33.936
+%         % -Type           : 0x01 (Command)
+%         % -OpCode         : 0xFE04 (GAP_DeviceDiscoveryRequest)
+%         % -Data Length    : 0x03 (3) byte(s)
+%         %  Mode           : 0x03 (3) (All)
+%         %  ActiveScan     : 0x01 (1) (Enable)
+%         %  WhiteList      : 0x00 (0) (All)
+%         % Dump(Tx):
+%         % 0000:01 04 FE 03 03 01 00                            .......                
+% 
+%         GAP_DeviceDiscoveryRequest=['01';'04';'FE';'03';'03';'01';'00'];
+% 
+%         if (disp_debug == 1)
+%             disp(GAP_DeviceDiscoveryRequest);
+%         end
+%         
+%         TxDataDec = hex2dec(GAP_DeviceDiscoveryRequest);
+%         fwrite(BleDongle, char(TxDataDec)');
+%         
+%         % read
+%         [RecvData, ~] = fread(BleDongle,9);
+%         if (disp_debug)
+%         RecvDataHex = dec2hex(RecvData);
+%         disp(RecvDataHex);
+%         end
+% 
+%         % read dummy
+%         pause(0.1);
+%         [~, ~, ~] = BleRecvPacket();
+%         
+%     end
+% 
+% %% cancel scan
+%     function CancelScanButton_Callback(~,~)
+% 
+%         % [1] : <Tx> - 06:13:56.360
+%         % -Type           : 0x01 (Command)
+%         % -OpCode         : 0xFE05 (GAP_DeviceDiscoveryCancel)
+%         % -Data Length    : 0x00 (0) byte(s)
+%         % Dump(Tx):
+%         % 0000:01 05 FE 00                                     ....
+% 
+%         GAP_DeviceDiscoveryCancel=['01';'05';'FE';'00'];
+% 
+%         if (disp_debug == 1)
+%             GAP_DeviceDiscoveryCancel'
+%         end
+%         
+%         TxDataDec = hex2dec(GAP_DeviceDiscoveryCancel);
+%         fwrite(BleDongle, char(TxDataDec)');
+% 
+%         % read dummy
+%         pause(0.1);
+%         [RecvDataHdrTmp, RecvDataBodyTmp, RecvError] = BleRecvPacket();
+%         
+%         % clear serial buffer
+%         while (BleDongle.BytesAvailable > 0)
+%             fread(BleDongle,1);
+%         end
+%         
+%     end
 
 %% establish
-    function EstablishButton_Callback(source,eventdata)
+    function EstablishButton_Callback(~,~)
         BleDeviceEstablish();
     end
 
 %% cancel establish
-    function CancelEstablishButton_Callback(source,eventdata)
+    function CancelEstablishButton_Callback(~,~)
         % [1] : <Tx> - 06:25:48.183
         % -Type           : 0x01 (Command)
         % -OpCode         : 0xFE0A (GAP_TerminateLinkRequest)
@@ -479,7 +490,7 @@ function swv_test_11
         GAP_TerminateLinkRequest=['01';'0A';'FE';'03';'FE';'FF';'13'];
 
         if (disp_debug == 1)
-            GAP_TerminateLinkRequest'
+            disp(GAP_TerminateLinkRequest);
         end
         
         TxDataDec = hex2dec(GAP_TerminateLinkRequest);
@@ -487,7 +498,7 @@ function swv_test_11
 
         % read dummy
         pause(0.1);
-        [RecvDataHdrTmp, RecvDataBodyTmp, RecvError] = BleRecvPacket();
+        [~, ~, ~] = BleRecvPacket();
         
         % clear serial buffer
         while (BleDongle.BytesAvailable > 0)
@@ -496,7 +507,7 @@ function swv_test_11
     end
 
 %% terminate link
-    function TerminateLinkButton_Callback(source,eventdata)
+    function TerminateLinkButton_Callback(~,~)
 
         % [1] : <Tx> - 06:56:12.651
         % -Type           : 0x01 (Command)
@@ -510,7 +521,7 @@ function swv_test_11
         GAP_TerminateLinkRequest=['01';'0A';'FE';'03';'00';'00';'13'];
 
         if (disp_debug == 1)
-            GAP_TerminateLinkRequest'
+            disp(GAP_TerminateLinkRequest);
         end
         
         TxDataDec = hex2dec(GAP_TerminateLinkRequest);
@@ -518,7 +529,7 @@ function swv_test_11
 
         % read dummy
         pause(0.1);
-        [RecvDataHdrTmp, RecvDataBodyTmp, RecvError] = BleRecvPacket();
+        [~, ~, ~] = BleRecvPacket();
         
         % clear serial buffer
         while (BleDongle.BytesAvailable > 0)
@@ -528,25 +539,25 @@ function swv_test_11
     end
 
 %% led on
-    function LedOnButton_Callback(source,eventdata)
+    function LedOnButton_Callback(~,~)
         BleDeviceLedControl(1);
     end
 
 %% led off
-    function LedOffButton_Callback(source,eventdata)
+    function LedOffButton_Callback(~,~)
         BleDeviceLedControl(0);
     end
 
 %% SWV param set
-    function SwvParamSetButton_Callback(source,eventdata)
+    function SwvParamSetButton_Callback(~,~)
         htext.String = 'Setting SWV parameters...';
         %address
         SWV_PARAM_ADDR_INIT_WAIT        = '0001';
         SWV_PARAM_ADDR_FREQ             = '0002';
-        SWV_PARAM_ADDR_PERIOD           = '0003';
-        SWV_PARAM_ADDR_HIGH_DURATION	= '0004';
-        SWV_PARAM_ADDR_INIT_VOLTAGE     = '0005';
-        SWV_PARAM_ADDR_FINAL_VOLTAGE	= '0006';
+%         SWV_PARAM_ADDR_PERIOD           = '0003';
+%         SWV_PARAM_ADDR_HIGH_DURATION	= '0004';
+%         SWV_PARAM_ADDR_INIT_VOLTAGE     = '0005';
+%         SWV_PARAM_ADDR_FINAL_VOLTAGE	= '0006';
         SWV_PARAM_ADDR_AMPLITUDE        = '0007';
         SWV_PARAM_ADDR_STEP_VOLTAGE     = '0008';
         SWV_PARAM_ADDR_OFFSET_VOLTAGE	= '0009';
@@ -602,7 +613,7 @@ function swv_test_11
     end
 
 %% AMPERO param set
-    function AmperoParamSetButton_Callback(source,eventdata)
+    function AmperoParamSetButton_Callback(~,~)
         htext.String = 'Setting Ampero parameters...';
         %addresses
         SWV_PARAM_ADDR_AMPERO_POINTS	= '000C';
@@ -634,18 +645,18 @@ function swv_test_11
     end
 
 %% SWV start
-    function SwvStartButton_Callback(source,eventdata)
-        %BleDeviceLedControl(3);
-        BleDeviceLedControl(7);
-    end
+%     function SwvStartButton_Callback(~,~)
+%         %BleDeviceLedControl(3);
+%         BleDeviceLedControl(7);
+%     end
 
 %% SWV daq
-    function SwvDaqButton_Callback(source,eventdata)
-        BleDeviceLedControl(4);
-    end
+%     function SwvDaqButton_Callback(~,~)
+%         BleDeviceLedControl(4);
+%     end
 
 %% SWV meas
-    function SwvMeasButton_Callback(source,eventdata)
+    function SwvMeasButton_Callback(~,~)
 
         %ax2‚ð•\Ž¦
         cla(ax2);
@@ -814,7 +825,7 @@ function swv_test_11
     end
 
 %% CV meas
-    function CvMeasButton_Callback(source,eventdata)
+    function CvMeasButton_Callback(~,~)
 
         %init CV(SPI, ADC)
         htext.String = 'SWV Init';
@@ -910,13 +921,13 @@ function swv_test_11
     end
 %% ChronoAmperometry meas
 %Automatically restart the ampero meassurement after it has completed
-    function ContinuousAmperoStartButton_Callback(source,eventdata)
+    function ContinuousAmperoStartButton_Callback(~,~)
         continuousAmperoFlag = true;
         htext.String = 'Continuous amperometry starting...';
         AmperoButton_Callback();
     end
 %% ChronoAmperometry meas
-    function AmperoButton_Callback(source,eventdata)
+    function AmperoButton_Callback(~,~)
 
         %ax2‚ð”ñ•\Ž¦
         cla(ax2);
@@ -944,7 +955,6 @@ function swv_test_11
         BleDeviceLedControl(8);
         pause(0.1);
 
-        jtmp = 1;
         AdcDataNumLast = 1;
         AdcData = [];
         IData = [];
@@ -954,11 +964,9 @@ function swv_test_11
         %polling
         while (amperoStopFlag == 0)
             RecvLongChar = BleReadLongCharValue();
-            %htext.String = char(RecvLongChar');
-%             char(RecvLongChar')
-%             RecvLongChar
+            htext.String = char(RecvLongChar');
             if ( strcmp(char(RecvLongChar(1:end-1)'),'Measuring Ampero!!!') )
-                disp(RecvLongChar')
+                disp(RecvLongChar)
             end
             if ( strcmp(char(RecvLongChar(1)),'A' ) )  %ampero
                 if ( strcmp(char(RecvLongChar(2)),'M' ) || strcmp(char(RecvLongChar(2)),'F' ) )   %measuring
@@ -985,7 +993,7 @@ function swv_test_11
             end
             
             if (~isempty(AdcData))
-                TimeData = AMPERO_PERIOD*[1:length(AdcData)]/1000;
+                TimeData = AMPERO_PERIOD*(1:length(AdcData))/1000;
                 %plot
                 set(ax1,'xtick',[]);
                 set(ax1,'ytick',[]);
@@ -1015,7 +1023,7 @@ function swv_test_11
         end
         
         %Time data
-        TimeData = AMPERO_PERIOD*[1:length(AdcData)]/1000;
+        TimeData = AMPERO_PERIOD*(1:length(AdcData))/1000;
         
         %file output
         starttimetext = datestr(now,'yyyymmdd_HHMMSS');
@@ -1044,7 +1052,7 @@ function swv_test_11
     end
 
 %% ChronoAmperometry stop
-    function AmperoStopButton_Callback(source,eventdata)
+    function AmperoStopButton_Callback(~,~)
 
         %stop ampero
         htext.String = 'Chronoamperometry STOP';
@@ -1096,9 +1104,15 @@ function swv_test_11
             case ('flexA01')
                 GAP_EstablishLinkRequest=['01';'09';'FE';'09';'00';'00';'00'; ... 
                     'D9';'A3';'1D';'89';'71';'24'];     %flex01 24:71:89:1D:A3:D9
+           case ('ampJ18_00')   %dev kit
+            GAP_EstablishLinkRequest=['01';'09';'FE';'09';'00';'00';'00'; ... 
+                '85';'DF';'7E';'AB';'78';'CC'];         %ampJ18_00 CC:78:AB:7E:DF:85                
+           case ('ampJ18_01')
+            GAP_EstablishLinkRequest=['01';'09';'FE';'09';'00';'00';'00'; ... 
+                '8C';'20';'A6';'2D';'07';'98'];         %ampJ18_01 98:07:2D:A6:20:8C
             case ('ampJ18_02')
                 GAP_EstablishLinkRequest=['01';'09';'FE';'09';'00';'00';'00'; ... 
-                    '7F';'1F';'A6';'2D';'07';'98'];     %ampJ18 98:07:2D:A6:1F:7F
+                    '7F';'1F';'A6';'2D';'07';'98'];     %ampJ18_02 98:07:2D:A6:1F:7F
         end
 
 %         if (disp_debug == 1)
@@ -1111,10 +1125,11 @@ function swv_test_11
         % [20] : <Rx> - GAP_HCI_ExtentionCommandStatus (9 Bytes)
         % 04 FF 06 7F 06 00 09 FE 00
 
-        [RecvData, Count] = fread(BleDongle,9);
+        [RecvData, ~] = fread(BleDongle,9);
+        if (disp_debug)
         RecvDataHex = dec2hex(RecvData);
-%         test = "TESTING"
-%         RecvDataHex'
+        disp(RecvDataHex);
+        end
 
         % check the results
         if ( RecvData(8) == hex2dec('FE') && ...   %command
@@ -1122,7 +1137,7 @@ function swv_test_11
             if ( RecvData(6) == hex2dec('00') )   %status:success
                 disp('Connection OK');
                 htext.String = 'Connection OK';
-                [RecvDataHdrTmp, RecvDataBodyTmp, RecvError] = BleRecvPacket();
+                [~, ~, ~] = BleRecvPacket();
                 % [RecvData2, Count2] = fread(BleDongle,22);
                 % RecvDataHex2 = dec2hex(RecvData2);
                 % RecvDataHex2 = RecvDataHex2'
@@ -1154,121 +1169,121 @@ function swv_test_11
         % 
         % for GAP_LinkParamUpdate read dummy
         pause(0.1);
-        [RecvDataHdrTmp, RecvDataBodyTmp, RecvError] = BleRecvPacket();
+        [~, ~, ~] = BleRecvPacket();
 
     end
 
 %% start daq
-    function BleDeviceDaqStart()
-        % clear serial buffer
-        while (BleDongle.BytesAvailable > 0)
-            fread(BleDongle,1);
-        end        
-        
-        disp('Accelerometer X notification enabled');
-        % write to ble device
-        WriteAddress	= '003C';   % accelerometer X axis notification enable
-        WriteValue      = '0001';   % enable
-        WriteData = MakePacket_GATT_WriteCharValue(WriteAddress,WriteValue);
-        WriteData;
-        fwrite(BleDongle, char(WriteData));
-        
-        % read 2 times. ToDo: check status etc. 
-        [RecvDataHdr, RecvDataBody, RecvError] = BleRecvPacket();
-        % check the results
-        if ( RecvDataBody(5) == hex2dec('FD') && ...   %command
-             RecvDataBody(4) == hex2dec('92') ) %command
-            if ( RecvDataBody(3) == hex2dec('00') )   %status:success
-                disp('Notification enable command OK');
-                [RecvDataHdr2, RecvDataBody2, RecvError] = BleRecvPacket();
-                if (RecvDataHdr2 == 0)
-                    htext.String = 'No response from Device';
-                end
-            end
-        else
-            disp('Enable command NG');
-        end
-
-        disp('Accelerometer Y notification enabled');
-        % write to ble device
-        WriteAddress	= '0040';   % accelerometer Y axis notification enable
-        WriteValue      = '0001';   % enable
-        WriteData = MakePacket_GATT_WriteCharValue(WriteAddress,WriteValue);
-        WriteData;
-        fwrite(BleDongle, char(WriteData));
-        
-        % read 2 times. ToDo: check status etc. 
-        [RecvDataHdr, RecvDataBody, RecvError] = BleRecvPacket();
-        % check the results
-        if ( RecvDataBody(5) == hex2dec('FD') && ...   %command
-             RecvDataBody(4) == hex2dec('92') ) %command
-            if ( RecvDataBody(3) == hex2dec('00') )   %status:success
-                disp('Notification enable command OK');
-                [RecvDataHdr2, RecvDataBody2, RecvError] = BleRecvPacket();
-                if (RecvDataHdr2 == 0)
-                    htext.String = 'No response from Device';
-                end
-            end
-        else
-            disp('Enable command NG');
-        end
-
-        disp('Accelerometer Z notification enabled');
-        % write to ble device
-        WriteAddress	= '0044';   % accelerometer Y axis notification enable
-        WriteValue      = '0001';   % enable
-        WriteData = MakePacket_GATT_WriteCharValue(WriteAddress,WriteValue);
-        WriteData;
-        fwrite(BleDongle, char(WriteData));
-        
-        % read 2 times. ToDo: check status etc. 
-        [RecvDataHdr, RecvDataBody, RecvError] = BleRecvPacket();
-        % check the results
-        if ( RecvDataBody(5) == hex2dec('FD') && ...   %command
-             RecvDataBody(4) == hex2dec('92') ) %command
-            if ( RecvDataBody(3) == hex2dec('00') )   %status:success
-                disp('Notification enable command OK');
-                [RecvDataHdr2, RecvDataBody2, RecvError] = BleRecvPacket();
-                if (RecvDataHdr2 == 0)
-                    htext.String = 'No response from Device';
-                end
-            end
-        else
-            disp('Enable command NG');
-        end
-        
-        disp('Accelerometer enabled');
-        % write to ble device
-        WriteAddress	= '0035';   % accelerometer enable
-        WriteValue      = '0001';   % enable
-        WriteData = MakePacket_GATT_WriteCharValue(WriteAddress,WriteValue);
-        if (disp_debug == 1) 
-            WriteDataHex = dec2hex(WriteData);
-            WriteDataHex = WriteDataHex'
-        end
-        fwrite(BleDongle, char(WriteData));
-
-%         GATT_WriteCharValue=['01';'92';'FD';'06';'00';'00';'34';'00';'01';'00'];
-%         TxDataDec = hex2dec(GATT_WriteCharValue);
-%         fwrite(BleDongle, char(TxDataDec)');
-        
-        % read 2 times. ToDo: check status etc. 
-        [RecvDataHdr, RecvDataBody, RecvError] = BleRecvPacket();
-
-        % check the results
-        if ( RecvDataBody(5) == hex2dec('FD') && ...   %command
-             RecvDataBody(4) == hex2dec('92') ) %command
-            if ( RecvDataBody(3) == hex2dec('00') )   %status:success
-                disp('Enable command OK');
-                [RecvDataHdr2, RecvDataBody2, RecvError] = BleRecvPacket();
-                if (RecvDataHdr2 == 0)
-                    htext.String = 'No response from Device';
-                end
-            end
-        else
-            disp('Enable command NG');
-        end
-    end
+%     function BleDeviceDaqStart()
+%         % clear serial buffer
+%         while (BleDongle.BytesAvailable > 0)
+%             fread(BleDongle,1);
+%         end        
+%         
+%         disp('Accelerometer X notification enabled');
+%         % write to ble device
+%         WriteAddress	= '003C';   % accelerometer X axis notification enable
+%         WriteValue      = '0001';   % enable
+%         WriteData = MakePacket_GATT_WriteCharValue(WriteAddress,WriteValue);
+%         WriteData;
+%         fwrite(BleDongle, char(WriteData));
+%         
+%         % read 2 times. ToDo: check status etc. 
+%         [RecvDataHdr, RecvDataBody, RecvError] = BleRecvPacket();
+%         % check the results
+%         if ( RecvDataBody(5) == hex2dec('FD') && ...   %command
+%              RecvDataBody(4) == hex2dec('92') ) %command
+%             if ( RecvDataBody(3) == hex2dec('00') )   %status:success
+%                 disp('Notification enable command OK');
+%                 [RecvDataHdr2, RecvDataBody2, RecvError] = BleRecvPacket();
+%                 if (RecvDataHdr2 == 0)
+%                     htext.String = 'No response from Device';
+%                 end
+%             end
+%         else
+%             disp('Enable command NG');
+%         end
+% 
+%         disp('Accelerometer Y notification enabled');
+%         % write to ble device
+%         WriteAddress	= '0040';   % accelerometer Y axis notification enable
+%         WriteValue      = '0001';   % enable
+%         WriteData = MakePacket_GATT_WriteCharValue(WriteAddress,WriteValue);
+%         WriteData;
+%         fwrite(BleDongle, char(WriteData));
+%         
+%         % read 2 times. ToDo: check status etc. 
+%         [RecvDataHdr, RecvDataBody, RecvError] = BleRecvPacket();
+%         % check the results
+%         if ( RecvDataBody(5) == hex2dec('FD') && ...   %command
+%              RecvDataBody(4) == hex2dec('92') ) %command
+%             if ( RecvDataBody(3) == hex2dec('00') )   %status:success
+%                 disp('Notification enable command OK');
+%                 [RecvDataHdr2, RecvDataBody2, RecvError] = BleRecvPacket();
+%                 if (RecvDataHdr2 == 0)
+%                     htext.String = 'No response from Device';
+%                 end
+%             end
+%         else
+%             disp('Enable command NG');
+%         end
+% 
+%         disp('Accelerometer Z notification enabled');
+%         % write to ble device
+%         WriteAddress	= '0044';   % accelerometer Y axis notification enable
+%         WriteValue      = '0001';   % enable
+%         WriteData = MakePacket_GATT_WriteCharValue(WriteAddress,WriteValue);
+%         WriteData;
+%         fwrite(BleDongle, char(WriteData));
+%         
+%         % read 2 times. ToDo: check status etc. 
+%         [RecvDataHdr, RecvDataBody, RecvError] = BleRecvPacket();
+%         % check the results
+%         if ( RecvDataBody(5) == hex2dec('FD') && ...   %command
+%              RecvDataBody(4) == hex2dec('92') ) %command
+%             if ( RecvDataBody(3) == hex2dec('00') )   %status:success
+%                 disp('Notification enable command OK');
+%                 [RecvDataHdr2, RecvDataBody2, RecvError] = BleRecvPacket();
+%                 if (RecvDataHdr2 == 0)
+%                     htext.String = 'No response from Device';
+%                 end
+%             end
+%         else
+%             disp('Enable command NG');
+%         end
+%         
+%         disp('Accelerometer enabled');
+%         % write to ble device
+%         WriteAddress	= '0035';   % accelerometer enable
+%         WriteValue      = '0001';   % enable
+%         WriteData = MakePacket_GATT_WriteCharValue(WriteAddress,WriteValue);
+%         if (disp_debug == 1) 
+%             WriteDataHex = dec2hex(WriteData);
+%             WriteDataHex = WriteDataHex'
+%         end
+%         fwrite(BleDongle, char(WriteData));
+% 
+% %         GATT_WriteCharValue=['01';'92';'FD';'06';'00';'00';'34';'00';'01';'00'];
+% %         TxDataDec = hex2dec(GATT_WriteCharValue);
+% %         fwrite(BleDongle, char(TxDataDec)');
+%         
+%         % read 2 times. ToDo: check status etc. 
+%         [RecvDataHdr, RecvDataBody, RecvError] = BleRecvPacket();
+% 
+%         % check the results
+%         if ( RecvDataBody(5) == hex2dec('FD') && ...   %command
+%              RecvDataBody(4) == hex2dec('92') ) %command
+%             if ( RecvDataBody(3) == hex2dec('00') )   %status:success
+%                 disp('Enable command OK');
+%                 [RecvDataHdr2, RecvDataBody2, RecvError] = BleRecvPacket();
+%                 if (RecvDataHdr2 == 0)
+%                     htext.String = 'No response from Device';
+%                 end
+%             end
+%         else
+%             disp('Enable command NG');
+%         end
+%     end
 
 %% Led control
     function BleDeviceLedControl(LedControlValue)
@@ -1324,13 +1339,13 @@ function swv_test_11
         fwrite(BleDongle, char(WriteData));
         
         % read 2 times. ToDo: check status etc. 
-        [RecvDataHdr, RecvDataBody, RecvError] = BleRecvPacket();
+        [~, RecvDataBody, ~] = BleRecvPacket();
         % check the results
         if ( RecvDataBody(5) == hex2dec('FD') && ...   %command
              RecvDataBody(4) == hex2dec('92') ) %command
             if ( RecvDataBody(3) == hex2dec('00') )   %status:success
                 disp('LED control command OK');
-                [RecvDataHdr2, RecvDataBody2, RecvError] = BleRecvPacket();
+                [RecvDataHdr2, ~, ~] = BleRecvPacket();
                 if (RecvDataHdr2 == 0)
                     htext.String = 'No response from Device';
                 end
@@ -1359,13 +1374,13 @@ function swv_test_11
         fwrite(BleDongle, char(WriteData));
         
         % read 2 times. ToDo: check status etc. 
-        [RecvDataHdr, RecvDataBody, RecvError] = BleRecvPacket();
+        [~, RecvDataBody, ~] = BleRecvPacket();
         % check the results
         if ( RecvDataBody(5) == hex2dec('FD') && ...   %command
              RecvDataBody(4) == hex2dec('92') ) %command
             if ( RecvDataBody(3) == hex2dec('00') )   %status:success
                 disp('Swv param set command OK');
-                [RecvDataHdr2, RecvDataBody2, RecvError] = BleRecvPacket();
+                [RecvDataHdr2, ~, ~] = BleRecvPacket();
                 if (RecvDataHdr2 == 0)
                     htext.String = 'No response from Device';
                 end
@@ -1410,8 +1425,7 @@ function swv_test_11
 
         %read
         while (1)
-            [RecvDataHdr, RecvDataBody, RecvError] = BleRecvPacket();
-            %?I—¹ƒpƒPƒbƒg‚ª‚­‚é‚Ü‚Å“Ç‚Þ
+            [RecvDataHdr, RecvDataBody, ~] = BleRecvPacket();
             if( RecvDataHdr(1) == hex2dec('04') && ...	%DataType(Event)
                 RecvDataHdr(2) == hex2dec('FF') && ...   %EventCode
                 RecvDataBody(1) == hex2dec('0D') && ...
@@ -1423,7 +1437,6 @@ function swv_test_11
                     break;
                 else
                     %disp('data body');
-                    %7ƒoƒCƒg–Ú‚©‚ç‚ªƒf?[ƒ^
                     if (exist('RecvDataTmp','var'))
                         RecvDataTmp = vertcat(RecvDataTmp,RecvDataBody(7:end));
                     else
@@ -1436,24 +1449,24 @@ function swv_test_11
     end
 
 %% make packet GATT_WriteCharValue
-    function WriteData = MakePacket_GATT_WriteCharValue(WriteAddress, WriteValue)
-        WriteDataType        = hex2dec('01');
-        WriteDataOpCode1     = hex2dec('FD');
-        WriteDataOpCode2     = hex2dec('92');
-        WriteDataDataLength	 = hex2dec('06');
-        WriteDataConnHandle1 = hex2dec('00');
-        WriteDataConnHandle2 = hex2dec('00');
-        WriteDataHandle1     = hex2dec(WriteAddress(1:2));
-        WriteDataHandle2     = hex2dec(WriteAddress(3:4));
-        WriteDataValue1      = hex2dec(WriteValue(1:2));
-        WriteDataValue2      = hex2dec(WriteValue(3:4));
-
-        WriteData = uint8([WriteDataType, WriteDataOpCode2, ...
-                           WriteDataOpCode1, WriteDataDataLength, ...
-                           WriteDataConnHandle2, WriteDataConnHandle1, ...
-                           WriteDataHandle2, WriteDataHandle1, ...
-                           WriteDataValue2, WriteDataValue1]);
-    end
+%     function WriteData = MakePacket_GATT_WriteCharValue(WriteAddress, WriteValue)
+%         WriteDataType        = hex2dec('01');
+%         WriteDataOpCode1     = hex2dec('FD');
+%         WriteDataOpCode2     = hex2dec('92');
+%         WriteDataDataLength	 = hex2dec('06');
+%         WriteDataConnHandle1 = hex2dec('00');
+%         WriteDataConnHandle2 = hex2dec('00');
+%         WriteDataHandle1     = hex2dec(WriteAddress(1:2));
+%         WriteDataHandle2     = hex2dec(WriteAddress(3:4));
+%         WriteDataValue1      = hex2dec(WriteValue(1:2));
+%         WriteDataValue2      = hex2dec(WriteValue(3:4));
+% 
+%         WriteData = uint8([WriteDataType, WriteDataOpCode2, ...
+%                            WriteDataOpCode1, WriteDataDataLength, ...
+%                            WriteDataConnHandle2, WriteDataConnHandle1, ...
+%                            WriteDataHandle2, WriteDataHandle1, ...
+%                            WriteDataValue2, WriteDataValue1]);
+%     end
 
 %% make packet GATT_WriteCharValue
     function WriteData = MakePacket_GATT_WriteCharValue05(WriteAddress, WriteValue)
@@ -1503,49 +1516,50 @@ function swv_test_11
 %% receive packet
     function [RecvDataHdr, RecvDataBody, RecvError] = BleRecvPacket()
         % receive packet
-        RecvError = 0;
         [RecvDataHdr, Count] = fread(BleDongle,3);
-        RecvDataHdrHex = dec2hex(RecvDataHdr);
-
+        if (disp_debug)        
+            RecvDataHdrHex = dec2hex(RecvDataHdr);
+            disp(RecvDataHdrHex);
+        end
         if(Count<3)
             RecvDataHdr = 0;
             RecvDataBody = 0;
             RecvError = 1;
         else
-            ReadDataType        = RecvDataHdr(1);
-            ReadDataEventCode	= RecvDataHdr(2);
+%             ReadDataType        = RecvDataHdr(1);
+%             ReadDataEventCode	= RecvDataHdr(2);
             ReadDataDataLength	= RecvDataHdr(3);
             [RecvDataBody, ~] = fread(BleDongle,ReadDataDataLength);
             RecvDataBodyHex = dec2hex(RecvDataBody,2);
             if (disp_debug == 1)
-                RecvDataBodyHex = RecvDataBodyHex;
+                disp(RecvDataBodyHex);
             end
             RecvError = 0;
         end
     end
 
 %% stop
-    function stopbutton_Callback(source,eventdata)
-        bool_stop = 1;
-
-        % fclose(BleDevice);
-
-    end
+%     function stopbutton_Callback(~,~)
+%         bool_stop = 1;
+% 
+%         % fclose(BleDevice);
+% 
+%     end
 
 %% Runtime error
-    function daqrterr_Callback(source,eventdata)
-        %‹­?§“I‚ÉƒXƒgƒbƒv‚µ?A?Ä“xƒXƒ^?[ƒg
-        pause(0.1);
-        bool_stop = 0;
-    end
+%     function daqrterr_Callback(~,~)
+%         %‹­?§“I‚ÉƒXƒgƒbƒv‚µ?A?Ä“xƒXƒ^?[ƒg
+%         pause(0.1);
+%         bool_stop = 0;
+%     end
 
 %% Parameter file open
-    function fileopenbutton_Callback(source,eventdata)
+    function fileopenbutton_Callback(~,~)
         dos(['notepad ' paramfile '&']);
     end
 
 %% Parameter file read
-    function filereadbutton_Callback(source,eventdata)
+    function filereadbutton_Callback(~,~)
         fpid = fopen(paramfile,'r');
         tmp1 = textscan(fpid, '%s %s', 'Delimiter','\t');
         fclose(fpid);
@@ -1553,14 +1567,14 @@ function swv_test_11
         param = tmp1{1};
 
         %General
-        dummy               = param(1);
+%         dummy               = param(1);
         ComName             = char(param(2)); %COMƒ|?[ƒg
-        BleDeviceID         = param(3);  %ƒfƒoƒCƒXID?i•sŽg—p?j
+%         BleDeviceID         = param(3);  
         deviceID            = char(param(4));    %ƒfƒoƒCƒXID
-        dummy               = param(5);
+%         dummy               = param(5);
         
         %SWV
-        dummy               = param(6);        
+%         dummy               = param(6);        
         SWV_INIT_WAIT       = str2double(param(7));     % Initial wait time (ms)
         SWV_FREQ            = str2double(param(8));     % Frequency (Hz)
         SWV_INIT_VOLTAGE	= str2double(param(9));     % Initial voltage (mV)
@@ -1571,26 +1585,22 @@ function swv_test_11
 
         SWV_INIT_VOLTAGE_OFFSET  = SWV_INIT_VOLTAGE + SWV_OFFSET_VOLTAGE;
         SWV_FINAL_VOLTAGE_OFFSET = SWV_FINAL_VOLTAGE + SWV_OFFSET_VOLTAGE;
-        dummy               = param(14);
+%         dummy               = param(14);
         
         %Chronoamperometry
-        dummy               = param(15);
+%         dummy               = param(15);
         AMPERO_POINTS       = str2double(param(16));    % measurement points
         AMPERO_PERIOD       = str2double(param(17));    % period in ms
         AMPERO_OFFSET_VOLTAGE   = str2double(param(18));    % offset voltage in mV
         AMPERO_POTENTIAL	= str2double(param(19));    % potential in mV
-        
-        AMPERO_RA_NUM = str2double(param(20));  %ˆÚ“®•½‹Ï“_?”
-
-        %ˆÚ“®•½‹Ï
+        AMPERO_RA_NUM = str2double(param(20));
         AMPERO_RA_A = AMPERO_RA_NUM;
         AMPERO_RA_B = ones(1,AMPERO_RA_NUM);
-
         AMPERO_POTENTIAL_OFFSET = AMPERO_POTENTIAL + AMPERO_OFFSET_VOLTAGE;
         
-        dummy               = param(21);
+%         dummy               = param(21);
         %Hardware paremeters
-        dummy               = param(22);
+%         dummy               = param(22);
         HW_ADC_VREF         = str2double(param(23));    % Vref in mV
         HW_ADC_RESOLUTION	= str2double(param(24));    % ADC resolution (bits)
         HW_RIV           = str2double(param(25));    % Transimpedance gain (kOhm)
@@ -1601,7 +1611,7 @@ function swv_test_11
 
 
 %% close
-    function closebutton_Callback(source,eventdata)
+    function closebutton_Callback(~,~)
         bool_close = 1;
         close;
     end
