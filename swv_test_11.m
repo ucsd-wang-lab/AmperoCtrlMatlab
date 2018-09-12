@@ -331,7 +331,7 @@ function swv_test_11
         [RecvData, ~] = fread(BleDongle,9);
         if (disp_debug)
         RecvDataHex = dec2hex(RecvData);
-        disp(RecvDataHex);
+        fprintf('%d ', RecvDataHex);
         end
 
         % [4] : <Rx> - GAP_DeviceInitDone (47 Bytes)
@@ -342,7 +342,7 @@ function swv_test_11
         [RecvData, ~] = fread(BleDongle,47);
         if (disp_debug)
         RecvDataHex = dec2hex(RecvData);
-        disp(RecvDataHex);
+        fprintf('%d ', RecvDataHex);
         end
 
         % [5] : <Tx> - GAP_GetParam
@@ -375,7 +375,7 @@ function swv_test_11
         [RecvData, ~] = fread(BleDongle,11);
         if (disp_debug)
         RecvDataHex = dec2hex(RecvData);
-        disp(RecvDataHex);
+        fprintf('%d ', RecvDataHex);
         end
 
         % [10] : <Rx> - GAP_HCI_ExtentionCommandStatus
@@ -384,7 +384,7 @@ function swv_test_11
         [RecvData, ~] = fread(BleDongle,11);
         if (disp_debug)
         RecvDataHex = dec2hex(RecvData);
-        disp(RecvDataHex);
+        fprintf('%d ', RecvDataHex);
         end
 
         % [11] : <Rx> - GAP_HCI_ExtentionCommandStatus
@@ -393,7 +393,7 @@ function swv_test_11
         [RecvData, ~] = fread(BleDongle,11);
         if (disp_debug)
         RecvDataHex = dec2hex(RecvData);
-        disp(RecvDataHex);
+        fprintf('%d ', RecvDataHex);
         end
 
         % [12] : <Rx> - GAP_HCI_ExtentionCommandStatus
@@ -402,44 +402,44 @@ function swv_test_11
         [RecvData, ~] = fread(BleDongle,11);
         if (disp_debug)
         RecvDataHex = dec2hex(RecvData);
-        disp(RecvDataHex);
+        fprintf('%d ', RecvDataHex);
         end
     end
 
-% %% scan
-%     function ScanButton_Callback(~,~)
-% 
-%         % [1] : <Tx> - 06:03:33.936
-%         % -Type           : 0x01 (Command)
-%         % -OpCode         : 0xFE04 (GAP_DeviceDiscoveryRequest)
-%         % -Data Length    : 0x03 (3) byte(s)
-%         %  Mode           : 0x03 (3) (All)
-%         %  ActiveScan     : 0x01 (1) (Enable)
-%         %  WhiteList      : 0x00 (0) (All)
-%         % Dump(Tx):
-%         % 0000:01 04 FE 03 03 01 00                            .......                
-% 
-%         GAP_DeviceDiscoveryRequest=['01';'04';'FE';'03';'03';'01';'00'];
-% 
-%         if (disp_debug == 1)
-%             disp(GAP_DeviceDiscoveryRequest);
-%         end
-%         
-%         TxDataDec = hex2dec(GAP_DeviceDiscoveryRequest);
-%         fwrite(BleDongle, char(TxDataDec)');
-%         
-%         % read
-%         [RecvData, ~] = fread(BleDongle,9);
-%         if (disp_debug)
-%         RecvDataHex = dec2hex(RecvData);
-%         disp(RecvDataHex);
-%         end
-% 
-%         % read dummy
-%         pause(0.1);
-%         [~, ~, ~] = BleRecvPacket();
-%         
-%     end
+%% scan
+    function ScanButton_Callback(~,~)
+
+        % [1] : <Tx> - 06:03:33.936
+        % -Type           : 0x01 (Command)
+        % -OpCode         : 0xFE04 (GAP_DeviceDiscoveryRequest)
+        % -Data Length    : 0x03 (3) byte(s)
+        %  Mode           : 0x03 (3) (All)
+        %  ActiveScan     : 0x01 (1) (Enable)
+        %  WhiteList      : 0x00 (0) (All)
+        % Dump(Tx):
+        % 0000:01 04 FE 03 03 01 00                            .......                
+        disp('Scanning');
+        GAP_DeviceDiscoveryRequest=['01';'04';'FE';'03';'03';'01';'00'];
+
+        if (disp_debug == 1)
+            disp(GAP_DeviceDiscoveryRequest);
+        end
+        
+        TxDataDec = hex2dec(GAP_DeviceDiscoveryRequest);
+        fwrite(BleDongle, char(TxDataDec)');
+        
+        % read
+        [RecvData, ~] = fread(BleDongle,9);
+        if (disp_debug)
+        RecvDataHex = dec2hex(RecvData);
+        disp(RecvDataHex);
+        end
+
+        % read dummy
+        pause(0.1);
+        [~, ~, ~] = BleRecvPacket();
+        
+    end
 % 
 % %% cancel scan
 %     function CancelScanButton_Callback(~,~)
@@ -489,9 +489,9 @@ function swv_test_11
 
         GAP_TerminateLinkRequest=['01';'0A';'FE';'03';'FE';'FF';'13'];
 
-        if (disp_debug == 1)
-            disp(GAP_TerminateLinkRequest);
-        end
+%         if (disp_debug == 1)
+%             fprintf('%d ', GAP_TerminateLinkRequest);
+%         end
         
         TxDataDec = hex2dec(GAP_TerminateLinkRequest);
         fwrite(BleDongle, char(TxDataDec)');
@@ -517,12 +517,12 @@ function swv_test_11
         %  DiscReason     : 0x13 (19) (Remote User Terminated Connection)
         % Dump(Tx):
         % 0000:01 0A FE 03 00 00 13                            .......
-
+        disp('Terminating link...');
         GAP_TerminateLinkRequest=['01';'0A';'FE';'03';'00';'00';'13'];
 
-        if (disp_debug == 1)
-            disp(GAP_TerminateLinkRequest);
-        end
+%         if (disp_debug == 1)
+%             disp(GAP_TerminateLinkRequest);
+%         end
         
         TxDataDec = hex2dec(GAP_TerminateLinkRequest);
         fwrite(BleDongle, char(TxDataDec)');
@@ -919,6 +919,7 @@ function swv_test_11
         dlmwrite(swvfilename, [DataE' DataI'], ... 
             '-append',  'delimiter', '\t', 'newline', 'pc');
     end
+
 %% ChronoAmperometry meas
 %Automatically restart the ampero meassurement after it has completed
     function ContinuousAmperoStartButton_Callback(~,~)
@@ -926,13 +927,14 @@ function swv_test_11
         htext.String = 'Continuous amperometry starting...';
         AmperoButton_Callback();
     end
+
 %% ChronoAmperometry meas
     function AmperoButton_Callback(~,~)
 
-        %ax2を非表示
+        %ax2
         cla(ax2);
         set(ax2,'visible','off');
-        %ax1を大きく
+        %ax1
         cla(ax1);
         set(ax1,'Position', [left_m, bot_m, col_r, ver_r*2+mid_m]);
         
@@ -997,8 +999,8 @@ function swv_test_11
                 %plot
                 set(ax1,'xtick',[]);
                 set(ax1,'ytick',[]);
-                %plot(ax1, AdcData, '-x');
-                plot(ax1, TimeData,IData, '-o', TimeData(AMPERO_RA_NUM:end),IDataFilt(AMPERO_RA_NUM:end), '-x');
+                plot(ax1, AdcData, '-x');
+                %plot(ax1, TimeData,IData, '-o', TimeData(AMPERO_RA_NUM:end),IDataFilt(AMPERO_RA_NUM:end), '-x');
                 %plot(ax1, TimeData(AMPERO_RA_NUM:end),IDataFilt(AMPERO_RA_NUM:end), '-o');
                 xlim auto;
                 ylim auto;
@@ -1063,8 +1065,6 @@ function swv_test_11
         pause(0.1);
    end
 
-
-
 %% establish bluetooth
     function BleDeviceEstablish()
         disp('Establish link');
@@ -1109,7 +1109,7 @@ function swv_test_11
                 '85';'DF';'7E';'AB';'78';'CC'];         %ampJ18_00 CC:78:AB:7E:DF:85                
            case ('ampJ18_01')
             GAP_EstablishLinkRequest=['01';'09';'FE';'09';'00';'00';'00'; ... 
-                '8C';'20';'A6';'2D';'07';'98'];         %ampJ18_01 98:07:2D:A6:20:8C
+                'AD';'20';'A6';'2D';'07';'98'];         %ampJ18_01 98:07:2D:A6:20:AD
             case ('ampJ18_02')
                 GAP_EstablishLinkRequest=['01';'09';'FE';'09';'00';'00';'00'; ... 
                     '7F';'1F';'A6';'2D';'07';'98'];     %ampJ18_02 98:07:2D:A6:1F:7F
@@ -1135,16 +1135,18 @@ function swv_test_11
         if ( RecvData(8) == hex2dec('FE') && ...   %command
              RecvData(7) == hex2dec('09') ) %command
             if ( RecvData(6) == hex2dec('00') )   %status:success
-                disp('Connection OK');
-                htext.String = 'Connection OK';
+                disp('Connected');
+                htext.String = 'Connected';
                 [~, ~, ~] = BleRecvPacket();
-                % [RecvData2, Count2] = fread(BleDongle,22);
-                % RecvDataHex2 = dec2hex(RecvData2);
-                % RecvDataHex2 = RecvDataHex2'
-                % if (Count2 < 1)
-                %     disp('No response from device');
-                %     htext.String = 'No response from device';
-                % end
+                [RecvData2, Count2] = fread(BleDongle,22);  % HCI_LE_ExtEvent
+%                 RecvDataHex2 = dec2hex(RecvData2);
+%                 disp('HCI_LE_ExtEvent:');
+%                 disp(RecvDataHex2);
+% %                 RecvDataHex2 = RecvDataHex2'
+%                 if (Count2 < 1)
+%                     disp('No response from device');
+%                     htext.String = 'No response from device';
+%                 end
             else
                 disp('Connection status: Unsccess');
                 htext.String = 'Error connecting!';
@@ -1335,7 +1337,9 @@ function swv_test_11
         end
 
         WriteData = MakePacket_GATT_WriteCharValue05(WriteAddress,WriteValue);
-%         WriteData;
+        fprintf('TX:');
+        fprintf('%x', WriteData);
+        fprintf('\n');
         fwrite(BleDongle, char(WriteData));
         
         % read 2 times. ToDo: check status etc. 
@@ -1370,7 +1374,7 @@ function swv_test_11
         WriteValue = [WriteValue1 WriteValue2];
         
         WriteData = MakePacket_GATT_WriteCharValue08(WriteAddress,WriteValue);
-%         WriteData;
+        fprintf('%d ', dec2hex(WriteData));
         fwrite(BleDongle, char(WriteData));
         
         % read 2 times. ToDo: check status etc. 
@@ -1390,7 +1394,7 @@ function swv_test_11
         end       
     end
 
-%% Read long char
+%% Read long char, used for getting ampero data
     function RecvLongChar = BleReadLongCharValue()
 
         % [5] : <Tx> - 10:23:04.829
@@ -1401,12 +1405,12 @@ function swv_test_11
         %  Handle         : 0x002A (42)
         %  Offset         : 0x0000 (0)
         % Dump(Tx):
-        % 0000:01 8C FD 06 00 00 2A 00 00 00                   ......*...
+        % 0000:01 8C FD 06 00 00 2A 00 00 00                   
 
         GATT_ReadLongCharValue=['01';'8C';'FD';'06';'00';'00';'2A';'00';'00';'00'];
 
 %         if (disp_debug == 1)
-%             disp(GATT_ReadLongCharValue);
+%             fprintf('%d', dec2hex(GATT_ReadLongCharValue));
 %         end
         
         TxDataDec = hex2dec(GATT_ReadLongCharValue);
@@ -1432,7 +1436,7 @@ function swv_test_11
                 RecvDataBody(2) == hex2dec('05') )
             
                 if( RecvDataHdr(3) == hex2dec('06') && ...  %Data Length
-                    RecvDataBody(3) == hex2dec('1A') ) %Status ?I了
+                    RecvDataBody(3) == hex2dec('1A') ) %The Procedure Is Completed
                     %disp('end of data');
                     break;
                 else
@@ -1509,9 +1513,7 @@ function swv_test_11
                            WriteDataHandle2, WriteDataHandle1, ...
                            WriteDataValue2, WriteDataValue1, ...
                            WriteDataValue4, WriteDataValue3]);
-       disp(WriteData);
     end
-
 
 %% receive packet
     function [RecvDataHdr, RecvDataBody, RecvError] = BleRecvPacket()
@@ -1532,26 +1534,11 @@ function swv_test_11
             [RecvDataBody, ~] = fread(BleDongle,ReadDataDataLength);
             RecvDataBodyHex = dec2hex(RecvDataBody,2);
             if (disp_debug == 1)
-                disp(RecvDataBodyHex);
+                fprintf('%d ', RecvDataBodyHex);
             end
             RecvError = 0;
         end
     end
-
-%% stop
-%     function stopbutton_Callback(~,~)
-%         bool_stop = 1;
-% 
-%         % fclose(BleDevice);
-% 
-%     end
-
-%% Runtime error
-%     function daqrterr_Callback(~,~)
-%         %強?ｧ的にストップし?A?ﾄ度スタ?[ト
-%         pause(0.1);
-%         bool_stop = 0;
-%     end
 
 %% Parameter file open
     function fileopenbutton_Callback(~,~)
@@ -1608,7 +1595,6 @@ function swv_test_11
         HW_LSB_mV = HW_ADC_VREF/(2^HW_ADC_RESOLUTION);  %1LSB in mV
         
     end
-
 
 %% close
     function closebutton_Callback(~,~)

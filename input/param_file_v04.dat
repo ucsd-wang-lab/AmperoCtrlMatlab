@@ -1,4 +1,4 @@
-%%%%%	General Settings, file must be tab delimited
+%%%%%	General Settings, !!!!file must be tab delimited!!!!
 COM10	% COM port
 btspp://544A165E2B9F	%device ID (not used)
 ampJ18_01	% device ID (ring01, ring02, flex01, ampJ18_00, ampJ18_01, ampJ18_02)
@@ -13,8 +13,8 @@ ampJ18_01	% device ID (ring01, ring02, flex01, ampJ18_00, ampJ18_01, ampJ18_02)
 1700	% Offset voltage (mV)
 -----	-----------------------
 %%%%%	Chronoamperometry
-30	% measurement points
-1000	% period (ms)
+60	% measurement points
+500	% period (ms)
 500	% offset voltage (mV)
 500	% potential (mV)
 5	% running average points (set 1 for raw data without averaging)
