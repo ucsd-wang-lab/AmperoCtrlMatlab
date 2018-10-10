@@ -1109,7 +1109,7 @@ function swv_test_11
                 '85';'DF';'7E';'AB';'78';'CC'];         %ampJ18_00 CC:78:AB:7E:DF:85                
            case ('ampJ18_01')
             GAP_EstablishLinkRequest=['01';'09';'FE';'09';'00';'00';'00'; ... 
-                'AD';'20';'A6';'2D';'07';'98'];         %ampJ18_01 98:07:2D:A6:20:AD
+                'E7';'20';'A6';'2D';'07';'98'];         %ampJ18_01 98:07:2D:A6:20:E7, AMP+IP 05, new board
             case ('ampJ18_02')
                 GAP_EstablishLinkRequest=['01';'09';'FE';'09';'00';'00';'00'; ... 
                     '7F';'1F';'A6';'2D';'07';'98'];     %ampJ18_02 98:07:2D:A6:1F:7F
