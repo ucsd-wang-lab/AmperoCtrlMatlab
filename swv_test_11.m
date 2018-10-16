@@ -1,7 +1,6 @@
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Software for wearable bio sensing
-%%% T. Nakagawa
-%%% 2016.?.?
+%%% 2018
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function swv_test_11
     close all;
@@ -68,11 +67,11 @@ function swv_test_11
     % figure parameter
     figwidth = 1280;
     figheight = 720;
-    left_m = 0.1; % ?¶‘¤—]”’
-    bot_m = 0.1; % ‰º‘¤—]”’ 
-    mid_m = 0.1; % ?ã‰ºŠÔ—]”’ 
-    ver_r = 0.38; % ?c•ûŒüŠ„?‡
-    col_r = 0.6; % ‰¡•ûŒüŠ„?‡
+    left_m = 0.1;
+    bot_m = 0.1;
+    mid_m = 0.1;
+    ver_r = 0.38;
+    col_r = 0.6;
     % button parameter
     buttonwidth = 150;
     buttonheight = 50;
@@ -107,18 +106,18 @@ function swv_test_11
                     buttonwidth*2,buttonheight], ...
         'Callback',{@textbutton_Callback});
     
-%     %startƒ{ƒ^ƒ“
+%     %start
 %     hstart = uicontrol('Style','pushbutton','String','Start','FontName','Arial','FontSize',11, ...
 %         'Position',[(figwidth-buttonwidth-buttonposoffsetx),(figheight-buttonheight*1-buttonposoffsety), ...
 %                     buttonwidth,buttonheight], ...
 %         'Callback',{@startbutton_Callback});
-%     %stopƒ{ƒ^ƒ“
+%     %stop
 %     hstop = uicontrol('Style','pushbutton','String','Stop','FontName','Arial','FontSize',11, ...
 %         'Position',[(figwidth-buttonwidth-buttonposoffsetx),(figheight-buttonheight*2-buttonposoffsety), ...
 %                     buttonwidth,buttonheight], ...
 %         'Callback',{@stopbutton_Callback});
 
-    %file openƒ{ƒ^ƒ“
+    %file open
     hfileopen = uicontrol('Style','pushbutton','String','Param file open','FontName','Arial','FontSize',11,...
         'Position',[(figwidth-buttonwidth-buttonposoffsetx),(figheight-buttonheight*4-buttonposoffsety), ...
                     buttonwidth,buttonheight], ...
@@ -129,7 +128,7 @@ function swv_test_11
                     buttonwidth,buttonheight], ...
         'Callback',{@filereadbutton_Callback});
     
-    %SWV param setƒ{ƒ^ƒ“
+    %SWV param set
 %     hSwvParamSet = uicontrol('Style','pushbutton','String','SWV Param Set','FontName','Arial','FontSize',11, ...
 %         'Position',[(figwidth-buttonwidth-buttonposoffsetx),(figheight-buttonheight*6-buttonposoffsety), ...
 %                     buttonwidth,buttonheight], ...
@@ -140,85 +139,79 @@ function swv_test_11
         'Position',[(figwidth-buttonwidth-buttonposoffsetx),(figheight-buttonheight*7-buttonposoffsety), ...
                     buttonwidth,buttonheight], ...
         'Callback',{@ContinuousAmperoStartButton_Callback});
-    %Ampero param setƒ{ƒ^ƒ“
+    %Ampero param set
     hAmperoParamSet = uicontrol('Style','pushbutton','String','Ampero Param Set','FontName','Arial','FontSize',11, ...
         'Position',[(figwidth-buttonwidth-buttonposoffsetx),(figheight-buttonheight*8-buttonposoffsety), ...
                     buttonwidth,buttonheight], ...
         'Callback',{@AmperoParamSetButton_Callback});
 
-    %closeƒ{ƒ^ƒ“
+    %close
     hclose = uicontrol('Style','pushbutton','String','Close','FontName','Arial','FontSize',11, ...
         'Position',[(figwidth-buttonwidth-buttonposoffsetx),(figheight-buttonheight*9-buttonposoffsety), ...
                     buttonwidth,buttonheight], ...
         'Callback',{@closebutton_Callback});
 
-%     %scanƒ{ƒ^ƒ“
+%     %scan
 %     hScan = uicontrol('Style','pushbutton','String','Scan','FontName','Arial','FontSize',11, ...
 %         'Position',[(figwidth-buttonwidth*2-buttonposoffsetx),(figheight-buttonheight*1-buttonposoffsety), ...
 %                     buttonwidth,buttonheight], ...
 %         'Callback',{@ScanButton_Callback});
-%     %cancel scanƒ{ƒ^ƒ“
+%     %cancel scan
 %     hCancelScan = uicontrol('Style','pushbutton','String','Cancel Scan','FontName','Arial','FontSize',14, ...
 %         'Position',[(figwidth-buttonwidth*2-buttonposoffsetx),(figheight-buttonheight*2-buttonposoffsety), ...
 %                     buttonwidth,buttonheight], ...
 %         'Callback',{@CancelScanButton_Callback});
-    %establishƒ{ƒ^ƒ“
+    %establish
     hEstablish = uicontrol('Style','pushbutton','String','Establish','FontName','Arial','FontSize',11, ...
         'Position',[(figwidth-buttonwidth*2-buttonposoffsetx),(figheight-buttonheight*1-buttonposoffsety), ...
                     buttonwidth,buttonheight], ...
         'Callback',{@EstablishButton_Callback});
-    %cancel establishƒ{ƒ^ƒ“
+    %cancel establish
     hCancelEstablish = uicontrol('Style','pushbutton','String','Cancel Establish','FontName','Arial','FontSize',11, ...
         'Position',[(figwidth-buttonwidth*2-buttonposoffsetx),(figheight-buttonheight*2-buttonposoffsety), ...
                     buttonwidth,buttonheight], ...
         'Callback',{@CancelEstablishButton_Callback});
-    %terminate linkƒ{ƒ^ƒ“
+    %terminate link
     hTerminateLink = uicontrol('Style','pushbutton','String','Terminate Link','FontName','Arial','FontSize',11, ...
         'Position',[(figwidth-buttonwidth*2-buttonposoffsetx),(figheight-buttonheight*3-buttonposoffsety), ...
                     buttonwidth,buttonheight], ...
         'Callback',{@TerminateLinkButton_Callback});
-    %Led Onƒ{ƒ^ƒ“
+    %Led On
     hLedOn = uicontrol('Style','pushbutton','String','LED On','FontName','Arial','FontSize',11, ...
         'Position',[(figwidth-buttonwidth*2-buttonposoffsetx),(figheight-buttonheight*4-buttonposoffsety), ...
                     buttonwidth,buttonheight], ...
         'Callback',{@LedOnButton_Callback});
-    %Led Offƒ{ƒ^ƒ“
+    %Led Off
     hLedOff = uicontrol('Style','pushbutton','String','LED Off','FontName','Arial','FontSize',11, ...
         'Position',[(figwidth-buttonwidth*2-buttonposoffsetx),(figheight-buttonheight*5-buttonposoffsety), ...
                     buttonwidth,buttonheight], ...
         'Callback',{@LedOffButton_Callback});
     
-    %SWV measƒ{ƒ^ƒ“
+    %SWV meas
     hSwvMeas = uicontrol('Style','pushbutton','String','SWV Measure','FontName','Arial','FontSize',11, ...
         'Position',[(figwidth-buttonwidth*2-buttonposoffsetx),(figheight-buttonheight*6-buttonposoffsety), ...
                     buttonwidth,buttonheight], ...
         'Callback',{@SwvMeasButton_Callback});
     
-    %CV measƒ{ƒ^ƒ“
+    %CV meas
     hCvStart = uicontrol('Style','pushbutton','String','CV Measure','FontName','Arial','FontSize',11, ...
         'Position',[(figwidth-buttonwidth*2-buttonposoffsetx),(figheight-buttonheight*7-buttonposoffsety), ...
                     buttonwidth,buttonheight], ...
         'Callback',{@CvMeasButton_Callback});
     
-    %Amperoƒ{ƒ^ƒ“
+    %Ampero
     hAmpero = uicontrol('Style','pushbutton','String','Chronoamperometry','FontName','Arial','FontSize',11, ...
         'Position',[(figwidth-buttonwidth*2-buttonposoffsetx),(figheight-buttonheight*8-buttonposoffsety), ...
                     buttonwidth,buttonheight], ...
         'Callback',{@AmperoButton_Callback});
 
-    %Ampero Stopƒ{ƒ^ƒ“
+    %Ampero Stop
     hAmperoStop = uicontrol('Style','pushbutton','String','STOP','FontName','Arial','FontSize',11, ...
         'Position',[(figwidth-buttonwidth*2-buttonposoffsetx),(figheight-buttonheight*9-buttonposoffsety), ...
                     buttonwidth,buttonheight], ...
         'Callback',{@AmperoStopButton_Callback});
-    
-    %Hitachiƒ?ƒS
-%     hlogodata = imread('.\input\corp_id_hd.jpg');
-%     hlogosize = size(hlogodata);
-%     hlogo = uicontrol('Style','pushbutton','String','',...
-%         'Position',[(figwidth-hlogosize(2)-logoposmx),logoposmy,hlogosize(2),hlogosize(1)]);
-%     set(hlogo,'cdata',hlogodata);
-    %UCSDƒ?ƒS
+
+    %UCSD
     ulogodata = imread('.\input\ucsd-logo2.jpg');
     ulogosize = size(ulogodata);
     ulogo = uicontrol('Style','pushbutton','String','',...
@@ -239,13 +232,9 @@ function swv_test_11
     bool_close = 0;
     bool_stop = 0;
     continuousAmperoFlag = false;
-    %com port open
-    BleDongleOpen();
-    %dongle initialization
-    BleDongleInit();
-
-	%htext.String = 'No data from device';
-    
+    BleDongleOpen();     %com port open
+    BleDongleInit();    %dongle initialization
+   
     %loop
     while(bool_close == 0)
         while(bool_stop == 1)
@@ -441,8 +430,8 @@ function swv_test_11
         
     end
 % 
-% %% cancel scan
-%     function CancelScanButton_Callback(~,~)
+%% cancel scan
+    function CancelScanButton_Callback(~,~)
 % 
 %         % [1] : <Tx> - 06:13:56.360
 %         % -Type           : 0x01 (Command)
@@ -469,7 +458,7 @@ function swv_test_11
 %             fread(BleDongle,1);
 %         end
 %         
-%     end
+     end
 
 %% establish
     function EstablishButton_Callback(~,~)
@@ -645,15 +634,15 @@ function swv_test_11
     end
 
 %% SWV start
-%     function SwvStartButton_Callback(~,~)
+     function SwvStartButton_Callback(~,~)
 %         %BleDeviceLedControl(3);
 %         BleDeviceLedControl(7);
-%     end
+     end
 
 %% SWV daq
-%     function SwvDaqButton_Callback(~,~)
+    function SwvDaqButton_Callback(~,~)
 %         BleDeviceLedControl(4);
-%     end
+     end
 
 %% SWV meas
     function SwvMeasButton_Callback(~,~)
@@ -920,9 +909,9 @@ function swv_test_11
             '-append',  'delimiter', '\t', 'newline', 'pc');
     end
 
-%% ChronoAmperometry meas
-%Automatically restart the ampero meassurement after it has completed
+%% ChronoAmperometry meas continious 
     function ContinuousAmperoStartButton_Callback(~,~)
+        %Automatically restart the ampero meassurement after it has completed
         continuousAmperoFlag = true;
         htext.String = 'Continuous amperometry starting...';
         AmperoButton_Callback();
@@ -999,17 +988,17 @@ function swv_test_11
                 %plot
                 set(ax1,'xtick',[]);
                 set(ax1,'ytick',[]);
-                plot(ax1, AdcData, '-x');
-                %plot(ax1, TimeData,IData, '-o', TimeData(AMPERO_RA_NUM:end),IDataFilt(AMPERO_RA_NUM:end), '-x');
-                %plot(ax1, TimeData(AMPERO_RA_NUM:end),IDataFilt(AMPERO_RA_NUM:end), '-o');
+                %plot(ax1, AdcData, '-x'); %raw data only
+                plot(ax1, TimeData,IData, '-o', TimeData(AMPERO_RA_NUM:end),IDataFilt(AMPERO_RA_NUM:end), '-x'); %raw and averaged data
+                %plot(ax1,TimeData(AMPERO_RA_NUM:end),IDataFilt(AMPERO_RA_NUM:end),'-o'); % averaged data only
                 xlim auto;
                 ylim auto;
                 set(ax1,'FontName','Arial','FontSize',16);
                 set(ax1,'LineWidth', 1);
                 xlabel(ax1,'Time (s)','FontName','Arial');
                 ylabel(ax1,'I (\muA)','FontName','Arial');
-                
-                %plot adc data
+
+                %plot adc data on second plot
 %                 set(ax2,'xtick',[]);
 %                 set(ax2,'ytick',[]);
 %                 plot(ax2, AdcData, '-x');
@@ -1027,7 +1016,7 @@ function swv_test_11
         %Time data
         TimeData = AMPERO_PERIOD*(1:length(AdcData))/1000;
         
-        %file output
+        %log file output
         starttimetext = datestr(now,'yyyymmdd_HHMMSS');
         amperofilename = ['.\output\chronoamperometry_outputdata_' starttimetext '.dat'];
 
@@ -1176,7 +1165,7 @@ function swv_test_11
     end
 
 %% start daq
-%     function BleDeviceDaqStart()
+    function BleDeviceDaqStart()
 %         % clear serial buffer
 %         while (BleDongle.BytesAvailable > 0)
 %             fread(BleDongle,1);
@@ -1285,7 +1274,7 @@ function swv_test_11
 %         else
 %             disp('Enable command NG');
 %         end
-%     end
+     end
 
 %% Led control
     function BleDeviceLedControl(LedControlValue)
@@ -1453,7 +1442,7 @@ function swv_test_11
     end
 
 %% make packet GATT_WriteCharValue
-%     function WriteData = MakePacket_GATT_WriteCharValue(WriteAddress, WriteValue)
+    function WriteData = MakePacket_GATT_WriteCharValue(WriteAddress, WriteValue)
 %         WriteDataType        = hex2dec('01');
 %         WriteDataOpCode1     = hex2dec('FD');
 %         WriteDataOpCode2     = hex2dec('92');
@@ -1470,7 +1459,7 @@ function swv_test_11
 %                            WriteDataConnHandle2, WriteDataConnHandle1, ...
 %                            WriteDataHandle2, WriteDataHandle1, ...
 %                            WriteDataValue2, WriteDataValue1]);
-%     end
+     end
 
 %% make packet GATT_WriteCharValue
     function WriteData = MakePacket_GATT_WriteCharValue05(WriteAddress, WriteValue)
